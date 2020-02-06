@@ -1,0 +1,240 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Connor McGarty, cmcgarty - HW2 P2.26 from Chapra Text</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-01-30"><meta name="DC.source" content="EE254_cmcgarty_HW2_2_26.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Connor McGarty, cmcgarty - HW2 P2.26 from Chapra Text</h1><!--introduction--><p>File: EE254_cmcgarty_HW2_2_26.m</p><p>Date: Submitted Thursday, January 30, 2020 - 1/30/20</p><p>Problem 2.26: Figure P2.26a shows Uniform beam subject to a linearly increasing distributed load. As depicted in Fig. P2.26b, deflection <img src="EE254_cmcgarty_HW2_2_26_eq08830444604280721118.png" alt="$y$"> (m) can be computed with <img src="EE254_cmcgarty_HW2_2_26_eq15118248339542264871.png" alt="$y = \frac{w_{0}}{120EIL}(-x^{5}+2L^{2}x^{3}-L^{4}x)$"> where <img src="EE254_cmcgarty_HW2_2_26_eq11831939140472266581.png" alt="$E=$"> the modulus of elasticity and <img src="EE254_cmcgarty_HW2_2_26_eq06242657575521159623.png" alt="$I=$"> the moment of inertia <img src="EE254_cmcgarty_HW2_2_26_eq14432951475740267618.png" alt="$(m^{4})$"> . Employ this equation and calculus to generate MATLAB plots of the following quantities versus distance along the beam:</p><div><ul><li>displacement <img src="EE254_cmcgarty_HW2_2_26_eq06150245130307546071.png" alt="$(y)$"></li></ul></div><div><ul><li>slope <img src="EE254_cmcgarty_HW2_2_26_eq15105132708803358734.png" alt="$[\theta(x) = \frac{dy}{dx}]$"></li></ul></div><div><ul><li>moment <img src="EE254_cmcgarty_HW2_2_26_eq10434010100484243914.png" alt="$[M(x)= \frac{EId^{2}y}{dx^{2}}]$"></li></ul></div><div><ul><li>shear <img src="EE254_cmcgarty_HW2_2_26_eq00414860053802627697.png" alt="$[V(x) = \frac{EId^{3}y}{d^{3}}]$"> , and</li></ul></div><div><ul><li>loading <img src="EE254_cmcgarty_HW2_2_26_eq01013679212289558355.png" alt="$[w(x) = \frac{-EId^{4}y}{dx^{4}}]$"> .</li></ul></div><p>Use the following parameters for your computation. <img src="EE254_cmcgarty_HW2_2_26_eq04768050361283247346.png" alt="$L=600 cm$"> <img src="EE254_cmcgarty_HW2_2_26_eq09280197138792540127.png" alt="$E=50000 kN/cm^{2}$"> <img src="EE254_cmcgarty_HW2_2_26_eq01401064184371742754.png" alt="$I=30000 cm^{4}$"> <img src="EE254_cmcgarty_HW2_2_26_eq04506360239654050000.png" alt="$w_{0}= 2.5 kN/cm$"> , and <img src="EE254_cmcgarty_HW2_2_26_eq13767934456910636167.png" alt="$\Delta x = 10 cm$"> . Employ the subplot function to display all the plots vertically on the same page in order.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Parameters</a></li><li><a href="#2">Solution</a></li></ul></div><h2 id="1">Parameters</h2><pre class="codeinput">clear;clc;close <span class="string">all</span>;
+modulus_of_elasticity = 50000; <span class="comment">% kN/cm^2</span>
+moment_of_inertia = 30000; <span class="comment">% cm^4</span>
+length = 600; <span class="comment">% cm</span>
+w_0 = 2.5; <span class="comment">% kN/cm</span>
+x_delta = 10; <span class="comment">% cm</span>
+x_init = 0;
+</pre><h2 id="2">Solution</h2><pre class="codeinput">x_vector = [x_init : x_delta : length]; <span class="comment">% independent variable</span>
+
+<span class="comment">% coefficient for all quantities</span>
+coefficient = (w_0 ./ (120 .* modulus_of_elasticity .* moment_of_inertia .* length));
+
+displacement_vector = coefficient .* ((0-(x_vector.^5)) + (2.*(length.^2).*(x_vector.^3)) - ((length.^4).*x_vector));
+<span class="comment">% first derivative of displacement vector</span>
+slope_vector = coefficient .* ((-5.*(x_vector.^4)) + (2.*2.*(length.^2).*(x_vector.^2)) <span class="keyword">...</span>
+                        - length.^4);
+<span class="comment">% first derivative of slope vector, 2nd derivative of displacement vector</span>
+moment_vector = (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* <span class="keyword">...</span>
+    ((4.*-5.*x_vector.^3) + (2.*2.*2.*(length.^2).*x_vector));
+<span class="comment">% first derivative of moment vector, 3rd derivative of displacement vector</span>
+<span class="comment">% (with additional coefficient that reduces out I and E)</span>
+shear_vector = (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* <span class="keyword">...</span>
+    ((3.*4.*-5.*(x_vector.^2)) + (2.*2.*2.*(length.^2)));
+<span class="comment">% first derivative of shear vector, 4th derivative of displacement vector</span>
+<span class="comment">% (with additional coefficient that reduces out I and E and negates as</span>
+<span class="comment">% well)</span>
+loading_vector = -1 .* (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* <span class="keyword">...</span>
+    ((2.*3.*4.*-5.*x_vector));
+
+subplot(5,1,1);
+plot(x_vector, displacement_vector);
+
+xlabel(<span class="string">'Position along length of beam (cm)'</span>);
+ylabel(<span class="string">'Displacement (y)'</span>);
+
+
+subplot(5,1,2);
+
+plot(x_vector, slope_vector);
+xlabel(<span class="string">'Position along length of beam (cm)'</span>);
+ylabel(<span class="string">'Slope (\theta(x))'</span>);
+
+subplot(5,1,3);
+
+plot(x_vector, moment_vector);
+xlabel(<span class="string">'Position along length of beam (cm)'</span>);
+ylabel(<span class="string">'Moment (M(x))'</span>);
+
+subplot(5,1,4);
+plot(x_vector, shear_vector);
+xlabel(<span class="string">'Position along length of beam (cm)'</span>);
+ylabel(<span class="string">'Shear (V(x))'</span>);
+
+subplot(5,1,5);
+plot(x_vector, loading_vector);
+xlabel(<span class="string">'Position along length of beam (cm)'</span>);
+ylabel(<span class="string">'Loading (w(x))'</span>);
+</pre><img vspace="5" hspace="5" src="EE254_cmcgarty_HW2_2_26_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Connor McGarty, cmcgarty - HW2 P2.26 from Chapra Text
+%
+% File: EE254_cmcgarty_HW2_2_26.m
+%
+% Date: Submitted Thursday, January 30, 2020 - 1/30/20
+%
+% Problem 2.26: Figure P2.26a shows Uniform beam subject to a linearly increasing distributed load. As
+% depicted in Fig. P2.26b, deflection 
+% $y$
+% (m) can be computed with
+% $y = \frac{w_{0}}{120EIL}(-x^{5}+2L^{2}x^{3}-L^{4}x)$
+% where 
+% $E=$
+% the modulus of elasticity and 
+% $I=$
+% the moment of inertia
+% $(m^{4})$
+% . Employ this equation and calculus to generate MATLAB plots of the
+% following quantities versus distance along the beam:
+% 
+% * displacement
+% $(y)$
+%
+% * slope
+% $[\theta(x) = \frac{dy}{dx}]$
+%
+% * moment
+% $[M(x)= \frac{EId^{2}y}{dx^{2}}]$
+%
+% * shear
+% $[V(x) = \frac{EId^{3}y}{d^{3}}]$
+% , and
+%
+% * loading
+% $[w(x) = \frac{-EId^{4}y}{dx^{4}}]$
+% .
+%
+% Use the following parameters for your computation.
+% $L=600 cm$
+% $E=50000 kN/cm^{2}$
+% $I=30000 cm^{4}$
+% $w_{0}= 2.5 kN/cm$
+% , and 
+% $\Delta x = 10 cm$
+% . Employ the subplot function to display all the plots vertically on the
+% same page in order.
+
+%% Parameters
+clear;clc;close all;
+modulus_of_elasticity = 50000; % kN/cm^2
+moment_of_inertia = 30000; % cm^4
+length = 600; % cm
+w_0 = 2.5; % kN/cm
+x_delta = 10; % cm
+x_init = 0;
+
+
+%% Solution
+x_vector = [x_init : x_delta : length]; % independent variable
+
+% coefficient for all quantities
+coefficient = (w_0 ./ (120 .* modulus_of_elasticity .* moment_of_inertia .* length)); 
+
+displacement_vector = coefficient .* ((0-(x_vector.^5)) + (2.*(length.^2).*(x_vector.^3)) - ((length.^4).*x_vector));
+% first derivative of displacement vector
+slope_vector = coefficient .* ((-5.*(x_vector.^4)) + (2.*2.*(length.^2).*(x_vector.^2)) ...
+                        - length.^4);
+% first derivative of slope vector, 2nd derivative of displacement vector
+moment_vector = (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* ...
+    ((4.*-5.*x_vector.^3) + (2.*2.*2.*(length.^2).*x_vector));
+% first derivative of moment vector, 3rd derivative of displacement vector
+% (with additional coefficient that reduces out I and E)
+shear_vector = (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* ...
+    ((3.*4.*-5.*(x_vector.^2)) + (2.*2.*2.*(length.^2)));
+% first derivative of shear vector, 4th derivative of displacement vector
+% (with additional coefficient that reduces out I and E and negates as
+% well)
+loading_vector = -1 .* (coefficient .* modulus_of_elasticity .* moment_of_inertia) .* ...
+    ((2.*3.*4.*-5.*x_vector));
+
+subplot(5,1,1);
+plot(x_vector, displacement_vector);
+
+xlabel('Position along length of beam (cm)');
+ylabel('Displacement (y)');
+
+
+subplot(5,1,2);
+
+plot(x_vector, slope_vector);
+xlabel('Position along length of beam (cm)');
+ylabel('Slope (\theta(x))');
+
+subplot(5,1,3);
+
+plot(x_vector, moment_vector);
+xlabel('Position along length of beam (cm)');
+ylabel('Moment (M(x))');
+
+subplot(5,1,4);
+plot(x_vector, shear_vector);
+xlabel('Position along length of beam (cm)');
+ylabel('Shear (V(x))');
+
+subplot(5,1,5);
+plot(x_vector, loading_vector);
+xlabel('Position along length of beam (cm)');
+ylabel('Loading (w(x))');
+
+
+
+##### SOURCE END #####
+--></body></html>

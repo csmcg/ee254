@@ -1,0 +1,37 @@
+%% Class_05_Outline: Control of flow and more I/O
+% File: Class_05_Outline.m
+% Copy: Copyright (c) 2020 Gregory C. Myers
+% BlazerID: gmyers
+% Vers: 1.0.0 01/28/2020 GCM - Presented Spring 2020 to EE254 Section2F
+% Desc: Driver for testing concepts in Class_05_Outline.m 
+
+%% Introduction to Control of Flow
+
+% if...else...end
+
+% if...elseif...else...end
+
+% switch...case...otherwise...end
+
+% for...end
+
+% while...end
+
+% break
+
+% user defined functions
+
+% try...catch...end
+
+%% Other File I/O
+
+% xlsread
+% https://www.mathworks.com/help/matlab/ref/xlsread.html
+
+% readtable
+% https://www.mathworks.com/help/matlab/ref/readtable.html
+% readtable determines the file format from the file extension:
+%   .txt, .dat, or .csv for delimited text files
+%   .xls, .xlsb, .xlsm, .xlsx, .xltm, .xltx, or .ods for spreadsheet files
+
+% When all else fails...

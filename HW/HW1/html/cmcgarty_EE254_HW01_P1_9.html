@@ -1,0 +1,198 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Connor McGarty, cmcgarty - HW01: P1.9 from Chapra Text</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-01-28"><meta name="DC.source" content="cmcgarty_EE254_HW01_P1_9.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Connor McGarty, cmcgarty - HW01: P1.9 from Chapra Text</h1><!--introduction--><p>File: cmcgarty_EE254_HW01_P1_9.m</p><p>Submission Date: Tuesday, January 28, 2020 - 1/29/20</p><p>Problem, P1.9: A storage tank contains a liquid at depth <img src="cmcgarty_EE254_HW01_P1_9_eq08830444604280721118.png" alt="$y$"> where <img src="cmcgarty_EE254_HW01_P1_9_eq05712527852097562708.png" alt="$y = 0$"> when the tank is half full. Liquid is withdrawn at a constant flow rate <img src="cmcgarty_EE254_HW01_P1_9_eq12795926589847895066.png" alt="$Q$"> to meet demands. The contents are resupplied at a sinusoidal rate <img src="cmcgarty_EE254_HW01_P1_9_eq17425256943615840460.png" alt="$3Q\sin^{2}(t)$">. Equation (1.14) can be written for this system as:</p><p><img src="cmcgarty_EE254_HW01_P1_9_eq18366484170241336494.png" alt="$$\frac{A_{y}}{dt} = 3Q\sin^{2}(t)$$"></p><p>or,</p><p>change in volume = inflow - outflow</p><p>Or, since the surface area A is constant:</p><p><img src="cmcgarty_EE254_HW01_P1_9_eq13938532505610177513.png" alt="$$\frac{dy}{dt} = 3*\frac{Q}{A}*\sin^{2}(t) - \frac{Q}{A}$$"></p><p>Use Euler's method to solve for the depth <img src="cmcgarty_EE254_HW01_P1_9_eq08830444604280721118.png" alt="$y$"> from <img src="cmcgarty_EE254_HW01_P1_9_eq16912281546434447644.png" alt="$t=0$"> to <img src="cmcgarty_EE254_HW01_P1_9_eq10740519226191864953.png" alt="$10s$"> with a step size of 0.5 s. The parameter values are <img src="cmcgarty_EE254_HW01_P1_9_eq12072723107415790633.png" alt="$A = 1250 m^{2}$"> and <img src="cmcgarty_EE254_HW01_P1_9_eq09997135124103070579.png" alt="$Q = 450 \frac{m^{3}}{s}$"> . Assume that the initial condition is y = 0.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Solution</a></li></ul></div><h2 id="1">Solution</h2><pre class="codeinput">clear;clc;
+<span class="comment">% Inital conditions</span>
+half_full = 0; <span class="comment">% m</span>
+surface_area = 1250; <span class="comment">% m^2, variable A</span>
+outflow_rate = 450; <span class="comment">% m^3/d, variable Q</span>
+
+<span class="comment">% set time conditions</span>
+t_start = 0; <span class="comment">% s</span>
+t_stop = 10; <span class="comment">% s</span>
+t_current = t_start;
+t_previous = t_current;
+t_delta = 0.5; <span class="comment">% s</span>
+t_vector = []; <span class="comment">% s</span>
+t_vector(1) = t_start;
+
+y_init = 0; <span class="comment">% m</span>
+y_vector = []; <span class="comment">% m</span>
+y_vector(1) = y_init;
+y_current = y_init;
+y_previous = y_current;
+
+iterator = 1;
+done = false; <span class="comment">% loop flag</span>
+
+<span class="keyword">while</span> (done == false)
+    iterator = iterator + 1;
+    slope = 3 .* (outflow_rate ./ surface_area) .* sin(t_previous).^2 <span class="keyword">...</span>
+                 - (outflow_rate ./ surface_area);
+    y_current = y_previous + slope * t_delta;
+    t_current = t_current + t_delta;
+    <span class="keyword">if</span> t_current &gt;= t_stop
+        done = true;
+    <span class="keyword">end</span>
+    y_vector(iterator) = y_current;
+    t_vector(iterator) = t_current;
+    t_previous = t_current;
+    t_current = t_current + t_delta;
+<span class="keyword">end</span>
+
+plot(t_vector, y_vector);
+axis([0, 10, -.5, .5]);
+xlabel(<span class="string">'Time (s)'</span>);
+ylabel(<span class="string">'Depth from half-fill line, y = 0 (m)'</span>);
+</pre><img vspace="5" hspace="5" src="cmcgarty_EE254_HW01_P1_9_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Connor McGarty, cmcgarty - HW01: P1.9 from Chapra Text
+%
+% File: cmcgarty_EE254_HW01_P1_9.m
+%
+% Submission Date: Tuesday, January 28, 2020 - 1/29/20
+%
+% Problem, P1.9: A storage tank contains a liquid at depth 
+% $y$
+% where 
+% $y = 0$
+% when the tank is half full. Liquid is withdrawn at a constant flow rate
+% $Q$
+% to meet demands. The contents are resupplied at a sinusoidal rate 
+% $3Q\sin^{2}(t)$.
+% Equation (1.14) can be written for this system as:
+%
+% $$\frac{A_{y}}{dt} = 3Q\sin^{2}(t)$$
+%
+% or,
+%
+% change in volume = inflow - outflow
+%
+% Or, since the surface area A is constant:
+%
+% $$\frac{dy}{dt} = 3*\frac{Q}{A}*\sin^{2}(t) - \frac{Q}{A}$$
+%
+% Use Euler's method to solve for the depth 
+% $y$ 
+% from 
+% $t=0$
+% to
+% $10s$
+% with a step size of 0.5 s. The parameter values are 
+% $A = 1250 m^{2}$
+% and 
+% $Q = 450 \frac{m^{3}}{s}$
+% . Assume that the initial condition is y = 0.
+
+%% Solution
+
+clear;clc;
+% Inital conditions
+half_full = 0; % m
+surface_area = 1250; % m^2, variable A
+outflow_rate = 450; % m^3/d, variable Q
+
+% set time conditions
+t_start = 0; % s
+t_stop = 10; % s
+t_current = t_start;
+t_previous = t_current;
+t_delta = 0.5; % s 
+t_vector = []; % s
+t_vector(1) = t_start;
+
+y_init = 0; % m
+y_vector = []; % m
+y_vector(1) = y_init;
+y_current = y_init;
+y_previous = y_current;
+
+iterator = 1;
+done = false; % loop flag
+
+while (done == false)
+    iterator = iterator + 1;
+    slope = 3 .* (outflow_rate ./ surface_area) .* sin(t_previous).^2 ...
+                 - (outflow_rate ./ surface_area);
+    y_current = y_previous + slope * t_delta;
+    t_current = t_current + t_delta;    
+    if t_current >= t_stop
+        done = true;
+    end
+    y_vector(iterator) = y_current;
+    t_vector(iterator) = t_current;
+    t_previous = t_current;
+    t_current = t_current + t_delta;
+end
+
+plot(t_vector, y_vector);
+axis([0, 10, -.5, .5]);
+xlabel('Time (s)');
+ylabel('Depth from half-fill line, y = 0 (m)');
+##### SOURCE END #####
+--></body></html>
