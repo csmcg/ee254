@@ -1,6 +1,6 @@
 %% Connor McGarty, cmcgarty - HW2 P2.26 from Chapra Text
 %
-% File: EE254_cmcgarty_HW2_2_26.m
+% File: EE254_cmcgarty_P2_2_26.m
 %
 % Date: Submitted Thursday, January 30, 2020 - 1/30/20
 %
