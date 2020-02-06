@@ -1,0 +1,277 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>EE254_cmcgarty_CaseStudy_2_7</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-02-06"><meta name="DC.source" content="EE254_cmcgarty_CaseStudy_2_7.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1></h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Solution</a></li></ul></div><h2 id="1">Solution</h2><p>The data from Table 2.1 along with gravitational acceleration can be entered as</p><pre class="codeinput">clear;clc
+m = [83.6, 60.2, 72.1, 91.1, 92.9, 65.3, 80.9];
+vt = [53.4, 48.5, 50.59, 55.7, 54, 47.7, 51.1];
+g = 9.81;
+
+<span class="comment">% The drag coefficients can then be computed with Eq. (2.1). Because we are</span>
+<span class="comment">% performing element-by-element operations on vectors, we must include</span>
+<span class="comment">% periods prior to the operators:</span>
+
+cd = g * m ./ vt .^ 2
+
+<span class="comment">% We can now use some of MATLAB's built-in functions to generate some</span>
+<span class="comment">% statistics for the results:</span>
+
+cdavg = mean(cd), cdmin = min(cd), cdmax = max(cd)
+
+<span class="comment">% Thus, the average value is</span>
+<span class="comment">% $0.2854$</span>
+<span class="comment">% with a range from</span>
+<span class="comment">% $0.2511$</span>
+<span class="comment">% to</span>
+<span class="comment">% $0.3125$</span>
+<span class="comment">% kg/m.</span>
+<span class="comment">%</span>
+<span class="comment">% Now, let's start to play with these data by using Eq. (2.1) to make a</span>
+<span class="comment">% prediction of the terminal velocity based on the average drag:</span>
+
+vpred = sqrt(g * m / cdavg)
+
+<span class="comment">% Notices that we do not have to use periods prior to the operators in this</span>
+<span class="comment">% formula? Do you understand why? (*Answer: g and cdavg are scalars, while</span>
+<span class="comment">% m is a vector. Therefore element-by-element operation is implied*)</span>
+
+<span class="comment">% We can plot these values versus the actual measured terminal velocities.</span>
+<span class="comment">% We will also superimpose a line indicating exact predictions (the 1:1</span>
+<span class="comment">% line) to help assess the results. Because we are going to eventually</span>
+<span class="comment">% generate a second plot, we employ the subplot command:</span>
+
+subplot(2,1,1);
+plot(vt,vpred,<span class="string">'o'</span>,vt,vt);
+xlabel(<span class="string">'measured'</span>);
+ylabel(<span class="string">'predicted'</span>);
+title(<span class="string">'Plot of predicted versus measured velocities'</span>);
+
+<span class="comment">% AS in the top plot of Fig. 2.2, because the predictions generally follow</span>
+<span class="comment">% the 1:1 line, you might initially conclude that the average drag</span>
+<span class="comment">% coefficient yields decent results. However, notice how the model tends to</span>
+<span class="comment">% underpredict the low velocities and overpredict the high. This suggests</span>
+<span class="comment">% that rather than being constant, there might be a trend in the drag</span>
+<span class="comment">% coefficients. This can be seen by plotting the estimated drag</span>
+<span class="comment">% coefficients versus mass:</span>
+
+subplot(2,1,1);
+plot(m,cd,<span class="string">'o'</span>);
+xlabel(<span class="string">'mass (kg)'</span>);
+ylabel(<span class="string">'estimated drag coefficient (kg/m)'</span>);
+title(<span class="string">'Plot of drag coefficient versus mass'</span>);
+
+<span class="comment">% The resulting plot, which is the bottom graph in Fig. 2.2, suggests that</span>
+<span class="comment">% rather than being constant, the drag coefficient seems to be increasing</span>
+<span class="comment">% as the mass of the jumper increases. Based on this result, you might</span>
+<span class="comment">% coclude that your model needs to be improved. At the least, it might</span>
+<span class="comment">% motivate you to conduct further experiments wit ha larger number of</span>
+<span class="comment">% jumpers to confirm your preliminary finding. In addition, the result</span>
+<span class="comment">% might also stimulate you to go to the fluid mechanics literature and</span>
+<span class="comment">% learn more about the science of drag. As described previously in Sec.</span>
+<span class="comment">% 1.4, you would discover that the parameter</span>
+<span class="comment">% $c_{d}$</span>
+<span class="comment">% is actually a lumped drag coefficient that along with the true drag</span>
+<span class="comment">% includes other factors such as the jumper's frontal area and air density:</span>
+<span class="comment">%</span>
+<span class="comment">% $$ c_{d} = \frac{C_{D}\rho A}{2}$$</span>
+<span class="comment">% where</span>
+<span class="comment">% $ C_{D} =$</span>
+<span class="comment">% a dimensionless drag coefficient,</span>
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+cd =
+
+  Columns 1 through 3
+
+   0.287602575432395   0.251062599638644   0.276359827723317
+
+  Columns 4 through 6
+
+   0.288056045305545   0.312533950617284   0.281543451603971
+
+  Column 7
+
+   0.303931510678957
+
+
+cdavg =
+
+   0.285869994428588
+
+
+cdmin =
+
+   0.251062599638644
+
+
+cdmax =
+
+   0.312533950617284
+
+
+vpred =
+
+  Columns 1 through 3
+
+  53.561577056316516  45.451525352327835  49.741382233145025
+
+  Columns 4 through 6
+
+  55.912563649945703  56.462236147934391  47.337662364284085
+
+  Column 7
+
+  52.689548597287427
+
+</pre><img vspace="5" hspace="5" src="EE254_cmcgarty_CaseStudy_2_7_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+%% Solution
+% The data from Table 2.1 along with gravitational acceleration can be
+% entered as 
+clear;clc
+m = [83.6, 60.2, 72.1, 91.1, 92.9, 65.3, 80.9];
+vt = [53.4, 48.5, 50.59, 55.7, 54, 47.7, 51.1];
+g = 9.81;
+
+% The drag coefficients can then be computed with Eq. (2.1). Because we are
+% performing element-by-element operations on vectors, we must include
+% periods prior to the operators:
+
+cd = g * m ./ vt .^ 2
+
+% We can now use some of MATLAB's built-in functions to generate some
+% statistics for the results:
+
+cdavg = mean(cd), cdmin = min(cd), cdmax = max(cd)
+
+% Thus, the average value is 
+% $0.2854$
+% with a range from 
+% $0.2511$
+% to 
+% $0.3125$
+% kg/m.
+%
+% Now, let's start to play with these data by using Eq. (2.1) to make a
+% prediction of the terminal velocity based on the average drag:
+
+vpred = sqrt(g * m / cdavg)
+
+% Notices that we do not have to use periods prior to the operators in this
+% formula? Do you understand why? (*Answer: g and cdavg are scalars, while
+% m is a vector. Therefore element-by-element operation is implied*)
+
+% We can plot these values versus the actual measured terminal velocities.
+% We will also superimpose a line indicating exact predictions (the 1:1
+% line) to help assess the results. Because we are going to eventually
+% generate a second plot, we employ the subplot command:
+
+subplot(2,1,1);
+plot(vt,vpred,'o',vt,vt);
+xlabel('measured');
+ylabel('predicted');
+title('Plot of predicted versus measured velocities');
+
+% AS in the top plot of Fig. 2.2, because the predictions generally follow
+% the 1:1 line, you might initially conclude that the average drag
+% coefficient yields decent results. However, notice how the model tends to
+% underpredict the low velocities and overpredict the high. This suggests
+% that rather than being constant, there might be a trend in the drag
+% coefficients. This can be seen by plotting the estimated drag
+% coefficients versus mass:
+
+subplot(2,1,1);
+plot(m,cd,'o');
+xlabel('mass (kg)');
+ylabel('estimated drag coefficient (kg/m)');
+title('Plot of drag coefficient versus mass');
+
+% The resulting plot, which is the bottom graph in Fig. 2.2, suggests that
+% rather than being constant, the drag coefficient seems to be increasing
+% as the mass of the jumper increases. Based on this result, you might
+% coclude that your model needs to be improved. At the least, it might
+% motivate you to conduct further experiments wit ha larger number of
+% jumpers to confirm your preliminary finding. In addition, the result
+% might also stimulate you to go to the fluid mechanics literature and
+% learn more about the science of drag. As described previously in Sec.
+% 1.4, you would discover that the parameter 
+% $c_{d}$
+% is actually a lumped drag coefficient that along with the true drag
+% includes other factors such as the jumper's frontal area and air density:
+%
+% $$ c_{d} = \frac{C_{D}\rho A}{2}$$
+% where
+% $ C_{D} =$
+% a dimensionless drag coefficient, 
+%
+
+
+
+
+##### SOURCE END #####
+--></body></html>

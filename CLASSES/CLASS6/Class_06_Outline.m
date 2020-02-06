@@ -26,10 +26,17 @@
 % Example: Problem 3.5
 %   [ value, error ] = approximate_sine( x, n )
 
-% Example: Problem 3.5
+
+% Example: Problem 3.8
 %   grade = lettergrade( score )
+
+
+
 % Example: Problem 3.18
 %   [ properties ] = get_properties( FormulaHandle, xmin, xmax, xdelta )
+
+results = get_properties(@function_01, 0, 1, .01);
+results = get_properties(@function_02, 0, 2*pi, pi/16);
 
 % Assignment: Complete a documented Matlab script/function for each of the
 % followiing:
@@ -43,6 +50,8 @@
 %   Problem 3.7 
 %       [ r, theta ] = cartesian_to_polar( x, y )
 %       note: vector
+%   Problem 3.8
+%   Problem 3.18
 
 
 

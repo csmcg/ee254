@@ -18,7 +18,7 @@ function [ Area, n ] = GetAreaByConvergenceThreshold( FormulaHandle, xmin, xmax,
         (nmin < 2) || (nmax <= nmin)            
         disp('Error: Please provide positive integer values for nmin and nmax s.t. nmin < nmax!');         
     else
-        n = nmin
+        n = nmin;
         try
             AreaPrevious = 0;
             AreaDelta = 2 * Threshold;                       
@@ -35,7 +35,7 @@ function [ Area, n ] = GetAreaByConvergenceThreshold( FormulaHandle, xmin, xmax,
                 for Index = 1 : 1 : length( x ) - 1
                     Area = Area + (x( Index + 1 ) - x( Index )) * (FormulaHandle( x( Index ) ) - 0);
                 end
-                AreaDelta = abs( AreaPrevious - Area )
+                AreaDelta = abs( AreaPrevious - Area );
                 AreaPrevious = Area;
                 n = n + 1;
             end
