@@ -1,0 +1,11 @@
+x = linspace(0, 2*pi, 1000);
+y_double = [];
+y_single = [];
+y_fixed = [];
+error_threshold = 1*(10.^-6);
+
+for index = 1:length(x)
+    y_double(index) = approximate_cosine_dbl(x(index), error_threshold);
+    y_single(index) = approximate_cosine_single(x(index),error_threshold);
+    
+end

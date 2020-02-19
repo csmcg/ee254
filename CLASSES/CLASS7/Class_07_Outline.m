@@ -44,10 +44,17 @@
 
 %% 4.1.2 Error Definitions
 % true (fractional) relative error
+%   ex: approximate sine when we compared the series to calculated value in
+%   matlab
+%   compared to a known value,
+%   epsilon = (true - approx) / true
 %
 % relative error
+%   compares successive approximations
+%   epsiolon = (f(t+t_delta) - f(t)) / f(t)
 %
 % stopping criterion
+%   when some epsilon is reached, stop calculating
 %
 % Example 4.1: Error Estimates for Iterative Methods
 
@@ -58,9 +65,47 @@
 %% 4.2.1. Computer Number Representation
 %
 % Integer Representation
-% binary to decimal
-% 
+% binary to decimal (whole)
+binary = [ 1 1 1 1 ];
+conversion = [ 2^3 2^2 2^1 2^0];
+decimal = sum(binary*conversion);
+
+decimal = 0;
+for index = 1:1:length(binary)
+    decimal = decimal + binary(index) * (2^(length(binary) - index));
+end
+decimal
+
 % decimal to binary
+decimal = 13;
+binary = [];
+
+binary(4) = mod(decimal,2);
+decimal = floor(decimal / 2);
+binary(3) = mod(decimal, 2);
+decimal = floor(decimal / 2);
+binary(2) = mod(decimal, 2);
+decimal = floor(decimal / 2);
+binary(1) = mod(decimal,2);
+
+binary = [1 1 1 1 1 1 1 1];
+decimal = 0;
+% binary to decimal (fraction)
+for index = 1:1:length(binary)
+    decimal = decimal + binary(index) * (2 ^ (length(binary) - index - 4));
+    convertor(index) = (2^(length(binary)-index-4);
+end
+
+% allocate 2 bits to fractional
+binary = [1 1 1 1];
+decimal = 0;
+for index = 1:1:length(binary)
+    decimal = decimal + binary(index) * (2 ^ (length(binary) - index - 4));
+    convertor(index) = (2^(length(binary)-index-4);
+end
+
+
+% decimal to binary 
 %
 % Matlab Datatypes - Integers
 % 
@@ -79,6 +124,11 @@
 % https://www.mathworks.com/help/fixedpoint/fixed-point-basics.html?s_tid=CRUX_lftnav
 %
 % https://www.mathworks.com/help/fixedpoint/examples/create-fixed-point-data.html
+
+%% FIXED POINT
+a = fi(0.125, 1, 8, 4);
+b = fi(-0.125, 1, 8, 4);
+c = fi(-0.125, 1, 8, 4);
  
 %% 4.2.2 arithmetic Manipulations of Computer Numbers
 % 
