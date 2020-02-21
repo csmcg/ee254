@@ -9,13 +9,14 @@ error = [];
 for x_index = 1 : 1 : length(x)
     n_current = 1;
     found = false;
+    x_val = x(x_index);
     
     while((found == false) && (n_current <= n_max))
         
         if isequal(approximation_method, @approximate_sine_fixed) % using fixed precision
-            [value_current, error_current] = approximation_method(x(x_index), n_current, word_length, fraction_length); 
+            [value_current, error_current] = approximation_method(x_val, n_current, word_length, fraction_length); 
         else % double or single
-            [value_current, error_current] = approximation_method(x(x_index), n_current);
+            [value_current, error_current] = approximation_method(x_val, n_current);
         end
         
         if (abs(error_current) <= error_threshold)

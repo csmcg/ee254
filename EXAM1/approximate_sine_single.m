@@ -13,9 +13,7 @@ function [ value, error ] = approximate_sine_single( x, n )
     if (n >= 1) 
         for n_current = [ 1 : 1 : n ]
             previous_val = value;
-            value = previous_val + ...
-                    (((-1).^n_current) .* (x .^ (2*n_current + 1))) ...
-                    ./ factorial(2*n_current + 1);
+            value = previous_val + (((-1)^(n_current + 1)) * ( x.^(2*n_current - 1)) ./ factorial( 2*n_current - 1));
         end        
     else 
         disp('Error: please enter a positive n!');
