@@ -1,4 +1,4 @@
-function [value, n, error] = approximate_sine_relative_error(x, n_max, error_threshold, approximation_method, word_length, fraction_length)
+function [value, n, error] = approximate_sine_absolute_error(x, n_max, error_threshold, approximation_method, word_length, fraction_length)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 

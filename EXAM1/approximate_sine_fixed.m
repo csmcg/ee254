@@ -1,4 +1,4 @@
-function [ value, error ] = approximate_sine_fixed( x, n, word_length, fraction_length )
+function [ value, error ] = approximate_sine_fixed( x, n, word_length, fraction_length)
 %approximate_sine uses series to estimate sine(theta), fixed precision
 %   x - vector of doubles ( 1 x m )
 %   n - number of terms in the series
@@ -7,15 +7,17 @@ function [ value, error ] = approximate_sine_fixed( x, n, word_length, fraction_
 
     value = fi(0, 1, word_length, fraction_length);
     y = sin( x );
+    x = fi(x, 1, word_length, fraction_length);
     
     % consider checking the size and the datatype of x
     if (n >= 1) 
         for n_current = [ 1 : 1 : n ]
-            value = fi(value + (((-1)^(n_current + 1)) * ( x.^(2*n_current - 1)) ./ factorial( 2*n_current - 1)),1,word_length, fraction_length);
+         previous_val = fi(value, 1, word_length, fraction_length);
+         value = previous_val + fi((((-1).^n_current) .* (x .^ (2*n_current + 1))) ./ factorial(2*n_current + 1), 1, word_length, fraction_length);
         end        
     else 
         disp('Error: please enter a positive n!');
     end
 
-    error = fi(value - y, 1, word_length, fraction_length); % approx - actual
+    error = y - value;
 end

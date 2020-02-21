@@ -15,7 +15,7 @@
 % Drive.
 
 %% Results
-% disp('datatype        x_min    x_max    threshold    n_min    n_max');
+% disp('datatype        x_min    x_max    max_error    n_min    n_max');
 % disp('====================================================================');
 % disp('double                                                              ');
 % disp('single                                                              ');
@@ -54,29 +54,28 @@ x = [x_min : x_step : x_max];
 
 threshold = 0.01;
 n_max = 200;
-word_legnth = 32;
+word_length = 32;
 fraction_length = 28; % will be decremented by 4 each succession later
 
 value = [];
 n = [];
+error = [];
 
-table = sprintf("\ndatatype\t\tx_min\tx_max\tthreshold\tn_min\tn_max\n");
+table = sprintf("\ndatatype\t\tx_min\tx_max\terror_max\tn_min\tn_max\n");
 table = table + "=========================================================\n";
 
 for index = [1:1:9]
     switch index
         case 1
-            [value(index, :), n(index, :)] = approximate_sine_relative_error(x, n_max, threshold, @approximate_sine_double, [], []);
-            table = table + sprintf("double\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, threshold, min(n(index, :)), max(n(index, :)));
+            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_double, [], []);
+            table = table + sprintf("double\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, max(error(index, :)), min(n(index, :)), max(n(index, :)));
         case 2
-            [value(index, :), n(index, :)] = approximate_sine_relative_error(x, n_max, threshold, @approximate_sine_single, [], []);
-            table = table + sprintf("single\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, threshold, min(n(index, :)), max(n(index, :)));
+            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_single, [], []);
+            table = table + sprintf("single\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, max(error(index,:)), min(n(index, :)), max(n(index, :)));
         otherwise
-            [value(index, :), n(index, :)] = approximate_sine_relative_error(x, n_max, threshold, @approximate_sine_fixed, word_legnth, fraction_length);
-            table = table + sprintf("fi(x,1,%d,%d)\t\t%d\t%d\t%f\t%d\t%d\n", word_length, fraction_length, x_min, x_max, threshold, min(n(index, :)), max(n(index, :))); 
+            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_fixed, word_length, fraction_length);
+            table = table + sprintf("fi(x,1,%d,%d)\t\t%d\t%d\t%f\t%d\t%d\n", word_length, fraction_length, x_min, x_max, max(error(index,:)), min(n(index, :)), max(n(index, :))); 
             fraction_length = fraction_length - 4;
     end
 end
-
 disp(table);
-

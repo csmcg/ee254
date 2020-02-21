@@ -11,7 +11,10 @@ function [ value, error ] = approximate_sine_double( x, n )
     % consider checking the size and the datatype of x
     if (n >= 1) 
         for n_current = [ 1 : 1 : n ]
-            value = value + (((-1)^(n_current + 1)) * ( x.^(2*n_current - 1)) ./ factorial( 2*n_current - 1));
+            previous_val = value;
+            value = previous_val + ...
+                (((-1).^n_current) .* (x .^ (2*n_current + 1))) ...
+                ./ factorial(2*n_current + 1);
         end        
     else 
         disp('Error: please enter a positive n!');
