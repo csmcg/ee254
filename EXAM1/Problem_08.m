@@ -52,7 +52,7 @@ x_max = 2*pi;
 
 x = [x_min : x_step : x_max];
 
-threshold = 0.01;
+threshold = 0.1;
 n_max = 200;
 word_length = 32;
 fraction_length = 28; % will be decremented by 4 each succession later
