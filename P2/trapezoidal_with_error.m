@@ -22,4 +22,6 @@
         error = error + (-1/12)*(h^3)*f_double_prime(xcurrent + xdelta/2);
         
     end
- end
+
+end
+
