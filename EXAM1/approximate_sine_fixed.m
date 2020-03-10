@@ -13,7 +13,8 @@ function [ value, error ] = approximate_sine_fixed( x, n, word_length, fraction_
     if (n >= 1) 
         for n_current = [ 1 : 1 : n ]
          previous_val = fi(value, 1, word_length, fraction_length);
-         value = previous_val + fi((((-1).^n_current) .* (x .^ (2*n_current + 1))) ./ factorial(2*n_current + 1), 1, word_length, fraction_length);
+         value = fi(previous_val + (((-1)^(n_current + 1)) * ( x.^(2*n_current - 1)) ./ factorial( 2*n_current - 1)), 1, word_length, fraction_length);
+
         end        
     else 
         disp('Error: please enter a positive n!');

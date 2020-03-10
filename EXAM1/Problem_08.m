@@ -52,7 +52,7 @@ x_max = 2*pi;
 
 x = [x_min : x_step : x_max];
 
-threshold = 0.01;
+threshold = 0.1;
 n_max = 200;
 word_length = 32;
 fraction_length = 28; % will be decremented by 4 each succession later
@@ -67,13 +67,24 @@ table = table + "=========================================================\n";
 for index = [1:1:9]
     switch index
         case 1
-            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_double, [], []);
+            
+            [value(index, :), n(index, :), error(index, :)] = ... 
+                approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_double, [], []);
+            
             table = table + sprintf("double\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, max(error(index, :)), min(n(index, :)), max(n(index, :)));
+            
         case 2
-            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_single, [], []);
+            
+            [value(index, :), n(index, :), error(index, :)] = ... 
+                approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_single, [], []);
+            
             table = table + sprintf("single\t\t%d\t%d\t%f\t%d\t%d\n", x_min, x_max, max(error(index,:)), min(n(index, :)), max(n(index, :)));
+            
         otherwise
-            [value(index, :), n(index, :), error(index, :)] = approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_fixed, word_length, fraction_length);
+            
+            [value(index, :), n(index, :), error(index, :)] = ...
+                approximate_sine_absolute_error(x, n_max, threshold, @approximate_sine_fixed, word_length, fraction_length);
+            
             table = table + sprintf("fi(x,1,%d,%d)\t\t%d\t%d\t%f\t%d\t%d\n", word_length, fraction_length, x_min, x_max, max(error(index,:)), min(n(index, :)), max(n(index, :))); 
             fraction_length = fraction_length - 4;
     end
