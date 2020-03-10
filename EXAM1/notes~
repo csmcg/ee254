@@ -1,0 +1,6 @@
+7a. - logical/math/model error results in loss of accuracy
+7b. - in storage, you can not store more significant figures than the precision available - e.g., 2 bit fraction length, only allows .0, 0.25, 0.5, 0.75, 1.0, so storing .125 results in loss of precision via rounding
+7c. - these different numerical types result in different amounts of precision and thus more error
+7d. - the 0.125 w/ 2-bit problem
+7e. - if hte roundoff error is always in the same direction it will impound the error. or it can negate by happening to get the correct
+
