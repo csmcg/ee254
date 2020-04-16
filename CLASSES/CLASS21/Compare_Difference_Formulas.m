@@ -32,9 +32,8 @@ function [Results] = Compare_Difference_Formulas(y_sym, xmin, xmax, xdelta)
     % 1st DERIVATIVE v2
     % x, x + xdelta, x + 2*xdelta
     Results{1, 3} = eval(subs(y_sym_prime, x, x_v(3:end-2)));% same as Results{1,1}, different x_vector
-    Results{1, 4} = (-1*y_h(x_v(5:end)) + 4*y_h(x_v(4:end-1)) - 3*y_h(x_v(3:end-2))) ./ 2*xdelta;
-    
-    
+    Results{1, 4} = (-1*y_h((x_v(5:end))) + 4.*(y_h(x_v(4:end-1))) - 3.*(y_h(x_v(3:end-2)))) ./ (2.*xdelta);
+        
     % 2nd DERIVATIVE v1
     % x, x + xdelta, x + 2*xdelta
     % x is x_vector(3)
