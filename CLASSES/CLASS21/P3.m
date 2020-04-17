@@ -93,24 +93,6 @@ cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
 linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
 tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
 step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
-step = heaviside(x-3)*sin(2*x);
-
-%% Setup 
-xmin = 0;
-xdelta = .1;
-xmax = 10;
-
-x_vector = [xmin : xdelta : xmax];
-
-poly_h = matlabFunction(poly);
-lin_h = matlabFunction(linear);
-step_h = matlabFunction(step);
-
-poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
-cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
-linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
-tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
-step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
 
 %% Forward/Backward/Center, 1st Derivative, v1
 figure; % plot function itself, 1st deriv actual, 1st deriv method 1, 1st deriv
@@ -224,3 +206,5 @@ plot(x_vector(3:end-2), step_res{1,12}); % 1st deriv, center v2
 title('Forward/Backward/Center Methods, 1st Derivative - v2, Step');
 legend('heaviside(x-3)*sin(2x)', 'Analytic', 'Forward - v2', ...
        'Backward - v2', 'Center - v2');
+   
+

@@ -47,7 +47,7 @@ function [Results] = Compare_Difference_Formulas(y_sym, xmin, xmax, xdelta)
     % 2nd DERIVATIVE v2
     % possible xi vals => 4:end-3
     Results{2, 3} = eval(subs(y_sym_double_prime, x, x_v(4:end-3)));
-    Results{2, 4} = (-1*y_h(x_v(7:end)) + 4*y_h(x_v(6:end-1)) - 5*y_h(x_v(5:end-2)) + 2*y_h(x_v(4:end-3))) / xdelta^2;
+    Results{2, 4} = (-1*y_h(x_v(7:end)) + 4*y_h(x_v(6:end-1)) - 5*y_h(x_v(5:end-2)) + 2*y_h(x_v(4:end-3))) / (xdelta^2);
     
     
     %% BACKWARD FINITE DIFFERENCE FORMULAS
@@ -57,37 +57,37 @@ function [Results] = Compare_Difference_Formulas(y_sym, xmin, xmax, xdelta)
     % x - xdelta is x_vector(1)
     % possible xi vals => 2:end-1
     Results{1, 5} = eval(subs(y_sym_prime, x, x_v(2:end-1)));
-    Results{1, 6} = (y_h(x_v(2:end-1)) - y_h(x_v(1:end-2))) / xdelta;
+    Results{1, 6} = (y_h(x_v(2:end-1)) - y_h(x_v(1:end-2))) / (xdelta);
     
     % 1st DERIVATIVE  v2
     % x, x - xdelta, x - 2*xdelta
     Results{1, 7} = eval(subs(y_sym_prime, x, x_v(3:end-2)));
-    Results{1, 8} = (3*y_h(x_v(3:end-2)) - 4*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / 2*xdelta;
+    Results{1, 8} = (3*y_h(x_v(3:end-2)) - 4*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / (2*xdelta);
     
     % 2nd DERIVATIVE v1
     %  x, x - xdelta, x - 2*xdelta
     Results{2, 5} = eval(subs(y_sym_double_prime, x, x_v(3:end-2)));
-    Results{2, 6} = (y_h(x_v(3:end-2)) - 2*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / xdelta^2;
+    Results{2, 6} = (y_h(x_v(3:end-2)) - 2*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / (xdelta^2);
     % 2nd DERIVATIVE v2
     Results{2, 7} = eval(subs(y_sym_double_prime, x, x_v(4:end-3)));
-    Results{2, 8} = (2*y_h(x_v(4:end-3)) - 5*y_h(x_v(3:end-4)) + 4*y_h(x_v(2:end-5)) - y_h(x_v(1:end-6))) / xdelta^2;
+    Results{2, 8} = (2*y_h(x_v(4:end-3)) - 5*y_h(x_v(3:end-4)) + 4*y_h(x_v(2:end-5)) - y_h(x_v(1:end-6))) / (xdelta^2);
     
     %% CENTERED FINITE DIFFERENCE FORMULAS
     % 1st DERIVATIVE v1
     % x - xdelta, x + xdelta
     Results{1, 9} = eval(subs(y_sym_prime, x, x_v(2:end-1)));
-    Results{1, 10} = (y_h(x_v(3:end)) - y_h(x_v(1:end-2))) ./ 2.*xdelta;
+    Results{1, 10} = (y_h(x_v(3:end)) - y_h(x_v(1:end-2))) ./ (2.*xdelta);
     % 1st DERIVATIVE v2
     % x -2*xdelta, x - xdelta, x + xdelta, x + 2*xdelta
     Results{1, 11} = eval(subs(y_sym_prime, x, x_v(3:end-2)));
-    Results{1, 12} = (-y_h(x_v(5:end)) + 8*y_h(x_v(4:end-1)) - 8*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / 12*xdelta;
+    Results{1, 12} = (-y_h(x_v(5:end)) + 8*y_h(x_v(4:end-1)) - 8*y_h(x_v(2:end-3)) + y_h(x_v(1:end-4))) / (12*xdelta);
     
     % 2nd DERIVATIVE v1
     % x, x + xdelta, x - xdelta, 
     Results{2, 9} = eval(subs(y_sym_double_prime, x, x_v(3:end-2)));
-    Results{2, 10} = (y_h(x_v(4:end-1)) - 2*y_h(x_v(3:end-2)) + y_h(x_v(2:end-3))) / xdelta^2;
+    Results{2, 10} = (y_h(x_v(4:end-1)) - 2*y_h(x_v(3:end-2)) + y_h(x_v(2:end-3))) / (xdelta^2);
     % 2nd DERIVATIVE v2
     Results{2, 11} = eval(subs(y_sym_double_prime, x, x_v(4:end-3)));
-    Results{2, 12} = (-y_h(x_v(6:end-1)) + 16*y_h(x_v(5:end-2)) - 30*y_h(x_v(4:end-3)) + 16*y_h(x_v(3:end-4)) - y_h(x_v(2:end-5))) / 12*xdelta^2;
+    Results{2, 12} = (-y_h(x_v(6:end-1)) + 16*y_h(x_v(5:end-2)) - 30*y_h(x_v(4:end-3)) + 16*y_h(x_v(3:end-4)) - y_h(x_v(2:end-5))) / (12*xdelta^2);
 end
 

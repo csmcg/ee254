@@ -1,0 +1,500 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P3</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-16"><meta name="DC.source" content="P3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">eqs to test</a></li><li><a href="#2">Define Testing functions</a></li><li><a href="#3">Define Testing functions</a></li><li><a href="#4">Setup</a></li><li><a href="#5">Setup</a></li><li><a href="#6">Forward/Backward/Center, 1st Derivative, v1</a></li><li><a href="#7">Forward/Backward/Center, 1st Derivative, v2</a></li></ul></div><h2 id="1">eqs to test</h2><p>polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2; cos(x) linear (3x) tan(x) step function heaviside</p><pre class="codeinput"><span class="comment">% graphs of the error:</span>
+<span class="comment">% multiple graphs (10)</span>
+<span class="comment">% 1 - first estimations, 1st deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 2 - second estimations, 1st deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 3 - first estimations, 2nd deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 4 - second estimations, 2nd deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+
+<span class="comment">% compare 1st derivative methods</span>
+<span class="comment">%   5 - first vs second vs actual (forward)</span>
+<span class="comment">%   6 - first vs second vs actual (backward)</span>
+<span class="comment">%   7 - first vs second vs actual (center)</span>
+
+<span class="comment">% compare 2nd derivative methods</span>
+<span class="comment">%   8 - first vs second vs actual (forward)</span>
+<span class="comment">%   9 - first vs second vs actual (backward)</span>
+<span class="comment">%  10 - first vs second vs actual (center)</span>
+
+
+clear;clc;close <span class="string">all</span>;
+syms <span class="string">x</span>;
+</pre><h2 id="2">Define Testing functions</h2><p>The following 5 functions will be used to test the derivative approximation techniques.</p><pre class="codeinput">poly = (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+cosine = cos(x);
+linear = 3*x;
+tangent = tan(x);<span class="comment">%% eqs to test</span>
+<span class="comment">% polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;</span>
+<span class="comment">% cos(x)</span>
+<span class="comment">% linear (3x)</span>
+<span class="comment">% tan(x)</span>
+<span class="comment">% step function heaviside</span>
+
+<span class="comment">% graphs of the error:</span>
+<span class="comment">% multiple graphs (10)</span>
+<span class="comment">% 1 - first estimations, 1st deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 2 - second estimations, 1st deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 3 - first estimations, 2nd deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+<span class="comment">% 4 - second estimations, 2nd deriv of each of 3 methods</span>
+<span class="comment">%   forward vs backward vs center vs actual</span>
+
+<span class="comment">% compare 1st derivative methods</span>
+<span class="comment">%   5 - first vs second vs actual (forward)</span>
+<span class="comment">%   6 - first vs second vs actual (backward)</span>
+<span class="comment">%   7 - first vs second vs actual (center)</span>
+
+<span class="comment">% compare 2nd derivative methods</span>
+<span class="comment">%   8 - first vs second vs actual (forward)</span>
+<span class="comment">%   9 - first vs second vs actual (backward)</span>
+<span class="comment">%  10 - first vs second vs actual (center)</span>
+
+
+clear;clc;close <span class="string">all</span>;
+syms <span class="string">x</span>;
+</pre><h2 id="3">Define Testing functions</h2><p>The following 5 functions will be used to test the derivative approximation techniques.</p><pre class="codeinput">poly = (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+cosine = cos(x);
+linear = 3*x;
+tangent = tan(x);
+step = heaviside(x-3)*sin(2*x);
+</pre><h2 id="4">Setup</h2><pre class="codeinput">xmin = 0;
+xdelta = .1;
+xmax = 10;
+
+x_vector = [xmin : xdelta : xmax];
+
+poly_h = matlabFunction(poly);
+lin_h = matlabFunction(linear);
+step_h = matlabFunction(step);
+
+poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
+cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
+linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
+tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
+step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
+step = heaviside(x-3)*sin(2*x);
+</pre><h2 id="5">Setup</h2><pre class="codeinput">xmin = 0;
+xdelta = .1;
+xmax = 10;
+
+x_vector = [xmin : xdelta : xmax];
+
+poly_h = matlabFunction(poly);
+lin_h = matlabFunction(linear);
+step_h = matlabFunction(step);
+
+poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
+cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
+linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
+tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
+step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
+</pre><h2 id="6">Forward/Backward/Center, 1st Derivative, v1</h2><pre class="codeinput">figure; <span class="comment">% plot function itself, 1st deriv actual, 1st deriv method 1, 1st deriv</span>
+hold <span class="string">on</span>;
+plot(x_vector, poly_h(x_vector)); <span class="comment">% plot the polynomial</span>
+plot(x_vector(2:end-1), poly_res{1,1}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(2:end-1), poly_res{1,2}); <span class="comment">% 1st derivative, forward v1</span>
+plot(x_vector(2:end-1), poly_res{1,6}); <span class="comment">% 1st deriv, backward v1</span>
+plot(x_vector(2:end-1), poly_res{1,10}); <span class="comment">% 1st deriv, center v1</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v1, Polynomial'</span>);
+legend(<span class="string">'Polynomial'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v1'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v1'</span>, <span class="string">'Center - v1'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, cos(x_vector)); <span class="comment">% plot the cosine</span>
+plot(x_vector(2:end-1), cos_res{1,1}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(2:end-1), cos_res{1,2}); <span class="comment">% 1st derivative, forward v1</span>
+plot(x_vector(2:end-1), cos_res{1,6}); <span class="comment">% 1st deriv, backward v1</span>
+plot(x_vector(2:end-1), cos_res{1,10}); <span class="comment">% 1st deriv, center v1</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v1, Cosine'</span>);
+legend(<span class="string">'cos(x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v1'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v1'</span>, <span class="string">'Center - v1'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, lin_h(x_vector)); <span class="comment">%</span>
+plot(x_vector(2:end-1), linear_res{1,1}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(2:end-1), linear_res{1,2}); <span class="comment">% 1st derivative, forward v1</span>
+plot(x_vector(2:end-1), linear_res{1,6}); <span class="comment">% 1st deriv, backward v1</span>
+plot(x_vector(2:end-1), linear_res{1,10}); <span class="comment">% 1st deriv, center v1</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v1, Linear'</span>);
+legend(<span class="string">'3*x'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v1'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v1'</span>, <span class="string">'Center - v1'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, tan(x_vector)); <span class="comment">%</span>
+plot(x_vector(2:end-1), tangent_res{1,1}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(2:end-1), tangent_res{1,2}); <span class="comment">% 1st derivative, forward v1</span>
+plot(x_vector(2:end-1), tangent_res{1,6}); <span class="comment">% 1st deriv, backward v1</span>
+plot(x_vector(2:end-1), tangent_res{1,10}); <span class="comment">% 1st deriv, center v1</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v1, Tangent'</span>);
+legend(<span class="string">'tan(x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v1'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v1'</span>, <span class="string">'Center - v1'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, step_h(x_vector)); <span class="comment">%</span>
+plot(x_vector(2:end-1), step_res{1,1}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(2:end-1), step_res{1,2}); <span class="comment">% 1st derivative, forward v1</span>
+plot(x_vector(2:end-1), step_res{1,6}); <span class="comment">% 1st deriv, backward v1</span>
+plot(x_vector(2:end-1), step_res{1,10}); <span class="comment">% 1st deriv, center v1</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v1, Step'</span>);
+legend(<span class="string">'heaviside(x-3)*sin(2x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v1'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v1'</span>, <span class="string">'Center - v1'</span>);
+</pre><img vspace="5" hspace="5" src="P3_01.png" alt=""> <img vspace="5" hspace="5" src="P3_02.png" alt=""> <img vspace="5" hspace="5" src="P3_03.png" alt=""> <img vspace="5" hspace="5" src="P3_04.png" alt=""> <img vspace="5" hspace="5" src="P3_05.png" alt=""> <h2 id="7">Forward/Backward/Center, 1st Derivative, v2</h2><pre class="codeinput">figure;
+hold <span class="string">on</span>;
+plot(x_vector, poly_h(x_vector)); <span class="comment">%</span>
+plot(x_vector(3:end-2), poly_res{1,3}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(3:end-2), poly_res{1,4}); <span class="comment">% 1st derivative, forward v2</span>
+plot(x_vector(3:end-2), poly_res{1,8}); <span class="comment">% 1st deriv, backward v2</span>
+plot(x_vector(3:end-2), poly_res{1,12}); <span class="comment">% 1st deriv, center v2</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v2, Polynomial'</span>);
+legend(<span class="string">'Poly'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v2'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v2'</span>, <span class="string">'Center - v2'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, cos(x_vector)); <span class="comment">%</span>
+plot(x_vector(3:end-2), cos_res{1,3}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(3:end-2), cos_res{1,4}); <span class="comment">% 1st derivative, forward v2</span>
+plot(x_vector(3:end-2), cos_res{1,8}); <span class="comment">% 1st deriv, backward v2</span>
+plot(x_vector(3:end-2), cos_res{1,12}); <span class="comment">% 1st deriv, center v2</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v2, cosine'</span>);
+legend(<span class="string">'cos(x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v2'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v2'</span>, <span class="string">'Center - v2'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, lin_h(x_vector)); <span class="comment">%</span>
+plot(x_vector(3:end-2), linear_res{1,3}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(3:end-2), linear_res{1,4}); <span class="comment">% 1st derivative, forward v2</span>
+plot(x_vector(3:end-2), linear_res{1,8}); <span class="comment">% 1st deriv, backward v2</span>
+plot(x_vector(3:end-2), linear_res{1,12}); <span class="comment">% 1st deriv, center v2</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v2, Linear'</span>);
+legend(<span class="string">'3*x'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v2'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v2'</span>, <span class="string">'Center - v2'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, tan(x_vector)); <span class="comment">%</span>
+plot(x_vector(3:end-2), tangent_res{1,3}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(3:end-2), tangent_res{1,4}); <span class="comment">% 1st derivative, forward v2</span>
+plot(x_vector(3:end-2), tangent_res{1,8}); <span class="comment">% 1st deriv, backward v2</span>
+plot(x_vector(3:end-2), tangent_res{1,12}); <span class="comment">% 1st deriv, center v2</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v2, Tangent'</span>);
+legend(<span class="string">'tan(x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v2'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v2'</span>, <span class="string">'Center - v2'</span>);
+
+figure;
+hold <span class="string">on</span>;
+plot(x_vector, step_h(x_vector)); <span class="comment">%</span>
+plot(x_vector(3:end-2), step_res{1,3}); <span class="comment">% 1st deriv, actual</span>
+plot(x_vector(3:end-2), step_res{1,4}); <span class="comment">% 1st derivative, forward v2</span>
+plot(x_vector(3:end-2), step_res{1,8}); <span class="comment">% 1st deriv, backward v2</span>
+plot(x_vector(3:end-2), step_res{1,12}); <span class="comment">% 1st deriv, center v2</span>
+title(<span class="string">'Forward/Backward/Center Methods, 1st Derivative - v2, Step'</span>);
+legend(<span class="string">'heaviside(x-3)*sin(2x)'</span>, <span class="string">'Analytic'</span>, <span class="string">'Forward - v2'</span>, <span class="keyword">...</span>
+       <span class="string">'Backward - v2'</span>, <span class="string">'Center - v2'</span>);
+</pre><img vspace="5" hspace="5" src="P3_06.png" alt=""> <img vspace="5" hspace="5" src="P3_07.png" alt=""> <img vspace="5" hspace="5" src="P3_08.png" alt=""> <img vspace="5" hspace="5" src="P3_09.png" alt=""> <img vspace="5" hspace="5" src="P3_10.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% eqs to test
+% polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+% cos(x)
+% linear (3x)
+% tan(x)
+% step function heaviside
+
+% graphs of the error:
+% multiple graphs (10)
+% 1 - first estimations, 1st deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 2 - second estimations, 1st deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 3 - first estimations, 2nd deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 4 - second estimations, 2nd deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+
+% compare 1st derivative methods
+%   5 - first vs second vs actual (forward)
+%   6 - first vs second vs actual (backward)
+%   7 - first vs second vs actual (center)
+
+% compare 2nd derivative methods
+%   8 - first vs second vs actual (forward)
+%   9 - first vs second vs actual (backward)
+%  10 - first vs second vs actual (center)
+
+
+clear;clc;close all;
+syms x;
+
+%% Define Testing functions
+% The following 5 functions will be used to test the derivative
+% approximation techniques. 
+poly = (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+cosine = cos(x);
+linear = 3*x;
+tangent = tan(x);%% eqs to test
+% polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+% cos(x)
+% linear (3x)
+% tan(x)
+% step function heaviside
+
+% graphs of the error:
+% multiple graphs (10)
+% 1 - first estimations, 1st deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 2 - second estimations, 1st deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 3 - first estimations, 2nd deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+% 4 - second estimations, 2nd deriv of each of 3 methods
+%   forward vs backward vs center vs actual
+
+% compare 1st derivative methods
+%   5 - first vs second vs actual (forward)
+%   6 - first vs second vs actual (backward)
+%   7 - first vs second vs actual (center)
+
+% compare 2nd derivative methods
+%   8 - first vs second vs actual (forward)
+%   9 - first vs second vs actual (backward)
+%  10 - first vs second vs actual (center)
+
+
+clear;clc;close all;
+syms x;
+
+%% Define Testing functions
+% The following 5 functions will be used to test the derivative
+% approximation techniques. 
+poly = (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
+cosine = cos(x);
+linear = 3*x;
+tangent = tan(x);
+step = heaviside(x-3)*sin(2*x);
+
+%% Setup 
+xmin = 0;
+xdelta = .1;
+xmax = 10;
+
+x_vector = [xmin : xdelta : xmax];
+
+poly_h = matlabFunction(poly);
+lin_h = matlabFunction(linear);
+step_h = matlabFunction(step);
+
+poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
+cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
+linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
+tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
+step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
+step = heaviside(x-3)*sin(2*x);
+
+%% Setup 
+xmin = 0;
+xdelta = .1;
+xmax = 10;
+
+x_vector = [xmin : xdelta : xmax];
+
+poly_h = matlabFunction(poly);
+lin_h = matlabFunction(linear);
+step_h = matlabFunction(step);
+
+poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
+cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
+linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
+tangent_res = Compare_Difference_Formulas(tangent, xmin, xmax, xdelta);
+step_res = Compare_Difference_Formulas(step, xmin, xmax, xdelta);
+
+%% Forward/Backward/Center, 1st Derivative, v1
+figure; % plot function itself, 1st deriv actual, 1st deriv method 1, 1st deriv
+hold on;
+plot(x_vector, poly_h(x_vector)); % plot the polynomial
+plot(x_vector(2:end-1), poly_res{1,1}); % 1st deriv, actual
+plot(x_vector(2:end-1), poly_res{1,2}); % 1st derivative, forward v1
+plot(x_vector(2:end-1), poly_res{1,6}); % 1st deriv, backward v1
+plot(x_vector(2:end-1), poly_res{1,10}); % 1st deriv, center v1
+title('Forward/Backward/Center Methods, 1st Derivative - v1, Polynomial');
+legend('Polynomial', 'Analytic', 'Forward - v1', ...
+       'Backward - v1', 'Center - v1');
+
+figure;
+hold on;
+plot(x_vector, cos(x_vector)); % plot the cosine
+plot(x_vector(2:end-1), cos_res{1,1}); % 1st deriv, actual
+plot(x_vector(2:end-1), cos_res{1,2}); % 1st derivative, forward v1
+plot(x_vector(2:end-1), cos_res{1,6}); % 1st deriv, backward v1
+plot(x_vector(2:end-1), cos_res{1,10}); % 1st deriv, center v1
+title('Forward/Backward/Center Methods, 1st Derivative - v1, Cosine');
+legend('cos(x)', 'Analytic', 'Forward - v1', ...
+       'Backward - v1', 'Center - v1');
+
+figure;
+hold on;
+plot(x_vector, lin_h(x_vector)); % 
+plot(x_vector(2:end-1), linear_res{1,1}); % 1st deriv, actual
+plot(x_vector(2:end-1), linear_res{1,2}); % 1st derivative, forward v1
+plot(x_vector(2:end-1), linear_res{1,6}); % 1st deriv, backward v1
+plot(x_vector(2:end-1), linear_res{1,10}); % 1st deriv, center v1
+title('Forward/Backward/Center Methods, 1st Derivative - v1, Linear');
+legend('3*x', 'Analytic', 'Forward - v1', ...
+       'Backward - v1', 'Center - v1');
+
+figure;
+hold on;
+plot(x_vector, tan(x_vector)); % 
+plot(x_vector(2:end-1), tangent_res{1,1}); % 1st deriv, actual
+plot(x_vector(2:end-1), tangent_res{1,2}); % 1st derivative, forward v1
+plot(x_vector(2:end-1), tangent_res{1,6}); % 1st deriv, backward v1
+plot(x_vector(2:end-1), tangent_res{1,10}); % 1st deriv, center v1
+title('Forward/Backward/Center Methods, 1st Derivative - v1, Tangent');
+legend('tan(x)', 'Analytic', 'Forward - v1', ...
+       'Backward - v1', 'Center - v1');
+
+figure;
+hold on;
+plot(x_vector, step_h(x_vector)); % 
+plot(x_vector(2:end-1), step_res{1,1}); % 1st deriv, actual
+plot(x_vector(2:end-1), step_res{1,2}); % 1st derivative, forward v1
+plot(x_vector(2:end-1), step_res{1,6}); % 1st deriv, backward v1
+plot(x_vector(2:end-1), step_res{1,10}); % 1st deriv, center v1
+title('Forward/Backward/Center Methods, 1st Derivative - v1, Step');
+legend('heaviside(x-3)*sin(2x)', 'Analytic', 'Forward - v1', ...
+       'Backward - v1', 'Center - v1');
+   
+%% Forward/Backward/Center, 1st Derivative, v2
+   
+figure;
+hold on;
+plot(x_vector, poly_h(x_vector)); % 
+plot(x_vector(3:end-2), poly_res{1,3}); % 1st deriv, actual
+plot(x_vector(3:end-2), poly_res{1,4}); % 1st derivative, forward v2
+plot(x_vector(3:end-2), poly_res{1,8}); % 1st deriv, backward v2
+plot(x_vector(3:end-2), poly_res{1,12}); % 1st deriv, center v2
+title('Forward/Backward/Center Methods, 1st Derivative - v2, Polynomial');
+legend('Poly', 'Analytic', 'Forward - v2', ...
+       'Backward - v2', 'Center - v2');
+   
+figure;
+hold on;
+plot(x_vector, cos(x_vector)); % 
+plot(x_vector(3:end-2), cos_res{1,3}); % 1st deriv, actual
+plot(x_vector(3:end-2), cos_res{1,4}); % 1st derivative, forward v2
+plot(x_vector(3:end-2), cos_res{1,8}); % 1st deriv, backward v2
+plot(x_vector(3:end-2), cos_res{1,12}); % 1st deriv, center v2
+title('Forward/Backward/Center Methods, 1st Derivative - v2, cosine');
+legend('cos(x)', 'Analytic', 'Forward - v2', ...
+       'Backward - v2', 'Center - v2');
+   
+figure;
+hold on;
+plot(x_vector, lin_h(x_vector)); % 
+plot(x_vector(3:end-2), linear_res{1,3}); % 1st deriv, actual
+plot(x_vector(3:end-2), linear_res{1,4}); % 1st derivative, forward v2
+plot(x_vector(3:end-2), linear_res{1,8}); % 1st deriv, backward v2
+plot(x_vector(3:end-2), linear_res{1,12}); % 1st deriv, center v2
+title('Forward/Backward/Center Methods, 1st Derivative - v2, Linear');
+legend('3*x', 'Analytic', 'Forward - v2', ...
+       'Backward - v2', 'Center - v2');
+   
+figure;
+hold on;
+plot(x_vector, tan(x_vector)); % 
+plot(x_vector(3:end-2), tangent_res{1,3}); % 1st deriv, actual
+plot(x_vector(3:end-2), tangent_res{1,4}); % 1st derivative, forward v2
+plot(x_vector(3:end-2), tangent_res{1,8}); % 1st deriv, backward v2
+plot(x_vector(3:end-2), tangent_res{1,12}); % 1st deriv, center v2
+title('Forward/Backward/Center Methods, 1st Derivative - v2, Tangent');
+legend('tan(x)', 'Analytic', 'Forward - v2', ...
+       'Backward - v2', 'Center - v2');
+   
+figure;
+hold on;
+plot(x_vector, step_h(x_vector)); % 
+plot(x_vector(3:end-2), step_res{1,3}); % 1st deriv, actual
+plot(x_vector(3:end-2), step_res{1,4}); % 1st derivative, forward v2
+plot(x_vector(3:end-2), step_res{1,8}); % 1st deriv, backward v2
+plot(x_vector(3:end-2), step_res{1,12}); % 1st deriv, center v2
+title('Forward/Backward/Center Methods, 1st Derivative - v2, Step');
+legend('heaviside(x-3)*sin(2x)', 'Analytic', 'Forward - v2', ...
+       'Backward - v2', 'Center - v2');
+##### SOURCE END #####
+--></body></html>
