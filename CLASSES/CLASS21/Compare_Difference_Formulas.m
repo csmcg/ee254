@@ -90,4 +90,3 @@ function [Results] = Compare_Difference_Formulas(y_sym, xmin, xmax, xdelta)
     Results{2, 11} = eval(subs(y_sym_double_prime, x, x_v(4:end-3)));
     Results{2, 12} = (-y_h(x_v(6:end-1)) + 16*y_h(x_v(5:end-2)) - 30*y_h(x_v(4:end-3)) + 16*y_h(x_v(3:end-4)) - y_h(x_v(2:end-5))) / (12*xdelta^2);
 end
-

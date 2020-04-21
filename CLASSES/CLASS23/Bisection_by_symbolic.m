@@ -1,4 +1,20 @@
-function [x_approx, x_ideal, y_actual, n] = Bisection_by_symbolic(y_sym, x_min, x_max, threshold, n_max )
+function [x_approx, x_ideal, y_actual, n] = ...
+    Bisection_by_symbolic(y_sym, symvar, xmin, xmax, threshold, n_max )
+% BISECTION_BY_SYMBOLIC: Provide symbolic function to determine root
+% INPUT ARGS:
+%   y_sym       : symbolic function
+%   symvar      : symbolic var of the root
+%   xmin        : lower bound of search
+%   xmax        : upper bound of search
+%   threshold   : threshold of error compared to solution of vpasolve, in %
+%   n           : max iterations
+%
+% OUTPUT ARGS:
+%   x_approx    : root found by Bisection_by_symbolic
+%   x_ideal     : root found by vpasolve
+%   y_actual    : value of eval(subs(y_sym, x, x_approx))
+%   n           : number of iterations taken
+
 % summary
 % all in loop with error threshold
 % start with xmin and xmax
@@ -7,8 +23,8 @@ function [x_approx, x_ideal, y_actual, n] = Bisection_by_symbolic(y_sym, x_min, 
 % if ^ < 0 (change in sign)
     % have root b/t xmin and xmid
     % xmin = xmin;
-    % xmax = xmid;
-    % recalc xmid
+    % xmax = xmid;so there is root b/t
+    % recalc xmid                
 % else (no change in sign) 
     % root b/t xmid and xmax, so:
     % xmin = xmid
@@ -38,25 +54,30 @@ function [x_approx, x_ideal, y_actual, n] = Bisection_by_symbolic(y_sym, x_min, 
     syms x;
     y_h = matlabFunction(y_sym);
     
-    while ((e_t > threshold) || (n < n_max))
+    x_ideal = double(vpasolve(y_sym == 0, symvar, [xmin xmax]));
+    
+    done = false;
+    while done == false
         n = n + 1;
         xmid = (xmin + xmax) / 2;
         
-        if ((y_h(xmin) * y_h(xmid)) < 0)
-
-        elseif
-            
+        if ((y_h(xmin) * y_h(xmid)) < 0) % change in sign, root between
+            xmin = xmin;
+            xmax = xmid;
+        else % root b/t mid and max
+            xmin = xmid;
+            xmax = xmax;
         end
         
-        if (n < n_max)
-            % stopped via threshold
-            % use vpasolve to find the root and compare to 
-        else
-            % 
-        end
+        e_t = abs((x_ideal - xmid) / x_ideal) * 100; % percent
         
+        if ((e_t < threshold) | (n == n_max))
+            done = true;
+        end
     end
     
+    x_approx = xmid;
+    y_actual = y_h(x_approx);
     
 end
 
@@ -65,4 +86,3 @@ end
 % in radians. Use a graphical technique and bisection with the
 % initial interval from 0.5 to 1. Perform the computation until
 % e_a is less than ? s = 2%
-

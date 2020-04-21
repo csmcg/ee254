@@ -72,8 +72,3 @@ num_roots = sum(m == 2) + sum(m == -2);
 
 %% Problems:
 % Problem 5.1
-
-
-
-
-
