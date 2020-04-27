@@ -4,7 +4,7 @@
 % need the open method as well (once we learn it)
 
 % should already have:
-    % incremental
+    % incremental search
 % CLOSED (bracketed):
     % bisection
     % false position

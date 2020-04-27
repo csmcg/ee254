@@ -78,9 +78,21 @@ options = optimset('Display', 'off', 'PlotFcns', 'optimplotfval');
 %
 
 %% 6.6.1 Matlab Functions: roots
-%
-a = [1 -3.5 2.75 2.125 -3.875 1.25];
+% Eq. 6.13
+a = [1 -3.5 2.75 2.125 -3.875 1.25]; % fifth order polynomial (coefficients)
 polyval(a,1);
+
+% (x - 0.5)(x+1) = x^2 + .5x - .5
+b = [1, .5, -0.5];
+b = poly([.5 -1]); % get polynomial coefficients via providing the roots
+
+[q, r] = deconv(a, b); % a, b are coefficient vectors of a polynomial
+
+x = roots(q)
+
+c = conv(q, b)
+
+d = roots(c)
 
 %% 6.7 Case Study: Pipe Friction
 % 
