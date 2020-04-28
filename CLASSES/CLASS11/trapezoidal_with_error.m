@@ -11,8 +11,8 @@
     
     xdelta = (xmax - xmin) ./ n;
     index = 1;
-    area = 0;
-    error= 0;
+    area  = 0;
+    error = 0;
     
     for xcurrent = [xmin : xdelta : (xmax - xdelta)]
         area = area + ((f(xcurrent) + f(xcurrent + xdelta)) ./ 2) .* xdelta;
@@ -20,6 +20,5 @@
         % error = error + ??;
         h = (((xcurrent+xdelta) - xcurrent) / n);
         error = error + (-1/12)*(h^3)*f_double_prime(xcurrent + xdelta/2);
-        
     end
  end

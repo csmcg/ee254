@@ -1,4 +1,4 @@
-function [x_approx, x_ideal, y_actual, n] = ...
+function [x_approx, error, x_ideal, y_actual, n] = ...
     Bisection_by_symbolic(y_sym, symvar, xmin, xmax, threshold, n_max )
 % BISECTION_BY_SYMBOLIC: Provide symbolic function to determine root
 % INPUT ARGS:
@@ -6,11 +6,12 @@ function [x_approx, x_ideal, y_actual, n] = ...
 %   symvar      : symbolic var of the root
 %   xmin        : lower bound of search
 %   xmax        : upper bound of search
-%   threshold   : threshold of error compared to solution of vpasolve, in %
+%   threshold   : threshold of actual error compared to solution of vpasolve
 %   n           : max iterations
 %
 % OUTPUT ARGS:
 %   x_approx    : root found by Bisection_by_symbolic
+%   error       : error
 %   x_ideal     : root found by vpasolve
 %   y_actual    : value of eval(subs(y_sym, x, x_approx))
 %   n           : number of iterations taken
@@ -55,6 +56,7 @@ function [x_approx, x_ideal, y_actual, n] = ...
     y_h = matlabFunction(y_sym);
     
     x_ideal = double(vpasolve(y_sym == 0, symvar, [xmin xmax]));
+    x_ideal = x_ideal(1);
     
     done = false;
     while done == false
@@ -69,13 +71,14 @@ function [x_approx, x_ideal, y_actual, n] = ...
             xmax = xmax;
         end
         
-        e_t = abs((x_ideal - xmid) / x_ideal) * 100; % percent
+        e_t = abs(x_ideal - xmid);
         
         if ((e_t < threshold) | (n == n_max))
             done = true;
         end
     end
     
+    error = e_t;
     x_approx = xmid;
     y_actual = y_h(x_approx);
     
