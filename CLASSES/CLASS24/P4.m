@@ -12,7 +12,7 @@
     % fixed point
     % Newton Raphson
     % Secant (2-points)
-format compact;    
+format compact;clear;clc;
 syms x;
 y1 = (x-1)*(x-(3/2))*(x-(7/4))*(x-(15/8))*(x-(31/16));
 y2 = x^2 - 1;
@@ -25,8 +25,8 @@ xmin = 0;
 xmax = 2;
 n_max = 1000;
 
-disp(sprintf("Method\tFxn\t\tIdeal\tApprox\tf(x)\t|e_a|\tIterations"));
-disp(sprintf("=================================================================================="));
+fprintf("Method\tFxn\t\tIdeal\tApprox\tf(x)\t|e_a|\tIterations\n");
+fprintf("==================================================================================\n");
 
 %for i = [1:5]
 for i = [1:4]
@@ -42,7 +42,7 @@ for i = [1:4]
             name = 'x^6 - 1';
         case 4
             f = y4;
-            name = 'cos(xpi/2)';
+            name = 'cosine';
         case 5
             f = y5;
             name = '-e^(x+1)';
@@ -52,29 +52,29 @@ for i = [1:4]
     method = "Bisect";
     [approx, e_a, actual, y, iter] = ... 
         Bisection_by_symbolic(f, x, xmin, xmax, threshold, n_max);
-    disp(sprintf("%s\t%s\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f", method, name, actual(1), approx, y, e_a(1), iter));                  
-    disp(sprintf("----------------------------------------------------------------------------------"));
+    fprintf("%s\t%s\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f\n", method, name, actual(1), approx, y, e_a(1), iter); 
+    fprintf("----------------------------------------------------------------------------------\n");
     % false position
     method = "FaPos";
     [approx, e_a, actual, y, iter] = False_Position_by_symbolic(f, x, xmin, xmax, threshold, n_max);
-    disp(sprintf("%s\t%s\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f", method, name, actual(1), approx, y, e_a(1), iter));                  
-    disp(sprintf("----------------------------------------------------------------------------------"));
+    fprintf("%s\t%s\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f\n", method, name, actual(1), approx, y, e_a(1), iter);
+    fprintf("----------------------------------------------------------------------------------\n");
     % fixed point
     method = "FixPnt";
     [approx, e_a, actual, y, iter] = ... 
         Fixed_point_by_symbolic(f,x,threshold,n_max);
-    disp(sprintf("%s\t%s\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f", method, name, actual(1), approx, y, e_a(1), iter));                  
-    disp(sprintf("----------------------------------------------------------------------------------"));
+    fprintf("%s\t%s\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f\n", method, name, actual(1), approx, y, e_a(1), iter);  
+    fprintf("----------------------------------------------------------------------------------\n");
     % newton-raphson
     method = "NR";
     [approx, e_a, actual, y, iter] = ... 
-        Newton_Raphson_by_symbolic(f,2*rand(1),threshold,n_max);
-    disp(sprintf("%s\t%s\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f", method, name, actual(1), approx, y, e_a(1), iter));                  
-    disp(sprintf("----------------------------------------------------------------------------------"));
+        Newton_Raphson_by_symbolic(f,.1,threshold,n_max);
+    fprintf("%s\t\t%s\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f\n", method, name, actual(1), approx, y, e_a(1), iter);
+    fprintf("----------------------------------------------------------------------------------\n");
     % secant
     method = "Sec";
     [approx, e_a, actual, y, iter] = ... 
-        Secant_by_symbolic(f,xmin,xmax,threshold,n_max);
-    disp(sprintf("%s\t%s\t\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f", method, name, actual(1), approx, y, e_a(1), iter));                  
-    disp(sprintf("----------------------------------------------------------------------------------"));     
+        Secant_by_symbolic(f,2*rand(1),.01,threshold,n_max);
+    fprintf("%s\t\t%s\t%0.4f\t%0.4f\t%0.4f\t%0.4f\t%.0f\n", method, name, actual(1), approx, y, e_a(1), iter);
+    fprintf("----------------------------------------------------------------------------------\n");
 end

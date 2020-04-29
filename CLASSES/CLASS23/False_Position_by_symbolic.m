@@ -11,7 +11,7 @@ function [x_approx, error, x_ideal, y_actual, n] = ...
     
     % find ideal root solution
     x_ideal = double(vpasolve(y_sym == 0, symvar, [xmin xmax]));
-    if length(x_ideal > 1)
+    if (length(x_ideal) > 1)
         x_ideal = x_ideal(1);
     end
     
@@ -25,13 +25,17 @@ function [x_approx, error, x_ideal, y_actual, n] = ...
         %              f(x_l) - f(x_u)
         n = n + 1;
         
-        x_approx = xmax - (y_h(xmax)*(xmin - xmax)) / (y_h(xmin)-y_h(xmax));
+        x_approx = xmax - ((y_h(xmax)*(xmin - xmax)) / (y_h(xmin)-y_h(xmax)));
         
-        test = sign(y_h(x_approx));
+        %test = sign(y_h(x_approx));
         
-        if (sign(y_h(xmax)) == test)
+        if ((y_h(x_approx) > 0) && (y_h(xmax) > 0))
             xmax = x_approx;
-        else
+        elseif ((y_h(x_approx) > 0) && (y_h(xmin) > 0))
+            xmin = x_approx;
+        elseif ((y_h(x_approx) < 0) && (y_h(xmax) < 0))
+            xmax = x_approx;
+        elseif ((y_h(x_approx) < 0) && (y_h(xmin) < 0))
             xmin = x_approx;
         end        
         

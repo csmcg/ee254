@@ -28,24 +28,24 @@
 
 x = [3 : 0.01 : 6];
 y = sin(10*x) + cos(3*x);
-subplot(2,1,1);
-plot(x,y);
-grid on;
+%subplot(2,1,1);
+%plot(x,y);
+%grid on;
 
 results = (y > 0); % logical 
-subplot(2,1,2);
-plot(x, results);
+%subplot(2,1,2);
+%plot(x, results);
 
-results = y ./ abs(y); % get either 1 (y>0), NaN (y / 0), or -1 (y < 0)
-subplot(2,1,2);
-plot(x, results);
+results = y ./ abs(y) % get either 1 (y>0), NaN (y / 0), or -1 (y < 0)
+%subplot(2,1,2);
+%plot(x, results);
 
-results == 1; % positive
-results == -1; % negative
+results == 1 % positive
+results == -1 % negative
 
 m = results(2:end) - results(1:end-1) % results = -2, 0, 2
-subplot(2,1,2);
-plot(x(2:end), m);
+%subplot(2,1,2);
+%plot(x(2:end), m);
 % count up number of 2's and -2's = number of sign changes
 % 2 = neg to pos
 % -2 = pos to neg

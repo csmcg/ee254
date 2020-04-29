@@ -16,7 +16,7 @@ function [x_approx, error, x_ideal, y_actual, n] = ...
     
     x_i = 2*rand(1); % guess
     x_ideal = double(vpasolve(y_sym == 0, symvar, [0 2]));
-    if (length(x_ideal > 1))
+    if (length(x_ideal) > 1)
         x_ideal = x_ideal(1);
     end
     while done == false
