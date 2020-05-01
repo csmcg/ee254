@@ -1,72 +1,34 @@
-%% eqs to test
-% polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
-% cos(x)
-% linear (3x)
-% tan(x)
-% step function heaviside
-
-% graphs of the error:
-% multiple graphs (10)
-% 1 - first estimations, 1st deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 2 - second estimations, 1st deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 3 - first estimations, 2nd deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 4 - second estimations, 2nd deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-
-% compare 1st derivative methods
-%   5 - first vs second vs actual (forward)
-%   6 - first vs second vs actual (backward)
-%   7 - first vs second vs actual (center)
-
-% compare 2nd derivative methods
-%   8 - first vs second vs actual (forward)
-%   9 - first vs second vs actual (backward)
-%  10 - first vs second vs actual (center)
-
-
-clear;clc;close all;
-syms x;
+%% EE254 P3 - Numerical Approaches to Derivatvies - Connor McGarty, cmcgarty
+% The following project compares different methods for finding the
+% derivative of functions. The following finite difference methods are 
+% compared:
+%
+% * Forward Finite Difference, 2 terms
+% * Forward Finite Difference, 3 terms
+% * Backward Finite Difference, 2 terms
+% * Backward Finite Difference, 3 terms
+% * Center Finite Difference, 4 terms
+% * Center Finite Difference, 5 terms
 
 %% Define Testing functions
 % The following 5 functions will be used to test the derivative
 % approximation techniques. 
-% polynomial from book: (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
-% cos(x)
-% linear (3x)
-% tan(x)
-% step function heaviside
+% Polynomial from book: 
+% 
+% $$ y = (-.1x^{4}) - (.15x^{3}) - (.5x^{2}) - (.25x) + 1.2 $$
+% 
+% $$ y = \cos{(x)} $$
+% 
+% $$ y = 3x $$
+% 
+% $$ y = \tan{(x)} $$
+% 
+% We'll also use a heaviside step function.
 
-% graphs of the error:
-% multiple graphs (10)
-% 1 - first estimations, 1st deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 2 - second estimations, 1st deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 3 - first estimations, 2nd deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-% 4 - second estimations, 2nd deriv of each of 3 methods
-%   forward vs backward vs center vs actual
-
-% compare 1st derivative methods
-%   5 - first vs second vs actual (forward)
-%   6 - first vs second vs actual (backward)
-%   7 - first vs second vs actual (center)
-
-% compare 2nd derivative methods
-%   8 - first vs second vs actual (forward)
-%   9 - first vs second vs actual (backward)
-%  10 - first vs second vs actual (center)
-
+%% Define Testing functions
 
 clear;clc;close all;
 syms x;
-
-%% Define Testing functions
-% The following 5 functions will be used to test the derivative
-% approximation techniques. 
 poly = (-.1*x^4) - (.15*x^3) - (.5*x^2) - (.25*x) + 1.2;
 cosine = cos(x);
 linear = 3*x;
@@ -84,6 +46,7 @@ poly_h = matlabFunction(poly);
 lin_h = matlabFunction(linear);
 step_h = matlabFunction(step);
 
+%% Call Compare_Difference_Formulas()
 poly_res = Compare_Difference_Formulas(poly, xmin, xmax, xdelta);
 cos_res = Compare_Difference_Formulas(cosine, xmin, xmax, xdelta);
 linear_res = Compare_Difference_Formulas(linear, xmin, xmax, xdelta);
@@ -510,7 +473,7 @@ plot(x_vector, poly_h(x_vector));
 plot(x_vector(3:end-2), poly_res{2,1}); % 2nd deriv, actual
 plot(x_vector(3:end-2), poly_res{2,6}); % 2nd derivative, backward v1
 plot(x_vector(4:end-3), poly_res{2,8}); % 2nd deriv, backward v2
-title('Backward Method, 1st Derivative, v1 vs v2, Polynomial');
+title('Backward Method, 2nd Derivative, v1 vs v2, Polynomial');
 legend('Polynomial', 'Analytic', 'v1', 'v2');
 
 figure;
@@ -557,8 +520,9 @@ plot(x_vector, poly_h(x_vector));
 plot(x_vector(3:end-2), poly_res{2,9}); % 2nd deriv, actual
 plot(x_vector(3:end-2), poly_res{2,10}); % 2nd derivative, center v1
 plot(x_vector(4:end-3), poly_res{2,12}); % 2nd deriv, center v2
-title('Center Method, 1st Derivative, v1 vs v2, Polynomial');
+title('Center Method, 2nd Derivative, v1 vs v2, Polynomial');
 legend('Polynomial', 'Analytic', 'v1', 'v2');
+snapnow;
 
 figure;
 hold on;
@@ -568,6 +532,7 @@ plot(x_vector(3:end-2), cos_res{2,10}); % 2nd derivative, center v1
 plot(x_vector(4:end-3), cos_res{2,12}); % 2nd deriv, center v2
 title('Center Method, 2nd Derivative, v1 vs v2, cosine');
 legend('cos(x)', 'Analytic', 'v1', 'v2');
+snapnow;
 
 figure;
 hold on;
@@ -577,6 +542,7 @@ plot(x_vector(3:end-2), linear_res{2,10}); % 2nd derivative, center v1
 plot(x_vector(4:end-3), linear_res{2,12}); % 2nd deriv, center v2
 title('Center Method, 2nd Derivative, v1 vs v2, linear');
 legend('3*x', 'Analytic', 'v1', 'v2');
+snapnow;
 
 figure;
 hold on;
@@ -586,6 +552,7 @@ plot(x_vector(3:end-2), tangent_res{2,10}); % 2nd derivative, center v1
 plot(x_vector(4:end-3), tangent_res{2,12}); % 2nd deriv, center v2
 title('Center Method, 2nd Derivative, v1 vs v2, tangent');
 legend('tan(x)', 'Analytic', 'v1', 'v2');
+snapnow;
 
 figure;
 hold on;
@@ -595,4 +562,4 @@ plot(x_vector(3:end-2), step_res{2,10}); % 2nd derivative, center v1
 plot(x_vector(4:end-3), step_res{2,12}); % 2nd deriv, center v2
 title('Center Method, 2nd Derivative, v1 vs v2, step');
 legend('heaviside(x-3)*sin(2x)', 'Analytic', 'v1', 'v2');
-close all;
+snapnow;
