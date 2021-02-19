@@ -1,21 +1,20 @@
-% do romberg integration up to 3rd iteration (O(h^8))
-% demonstrate the error associated with each level of approximation
-%   tabularly or graphically (prob tabularly)
-% accept any function
-% compare different xdeltas and the different iteration levels
-% (i.e., halving the interval vs increasing the order)
+%% EE254 P5 - Romberg Integration, Connor McGarty, cmcgarty
+% 
+% In this project, we examine the error of different levels of Romberg 
+% Integration. For different functions, the different levels of R.I. and
+% the decrease of the error as the number of integration segment increases.
+% With the higher order of Romberg Integration, the error decreases much
+% more quickly as number of segments increase as well.
+
+%% Solution
 close all; clear; clc;
 syms x;
+%%% Define Functions
 y1 = 0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5;
 y2 = x + (1/(x+1));
 y3 = -0.055*x^4 + 0.86*x^3 - 4.2*x^2 + 6.3*x + 2;
 y4 = 5*cos(x-(pi/2));
 
-% fplot(y1, [0 2]);
-% figure;
-% fplot(y2, [0 2]);
-% figure;
-% fplot(y3, [0 2]);
 
 % for each function
     % increase n 
